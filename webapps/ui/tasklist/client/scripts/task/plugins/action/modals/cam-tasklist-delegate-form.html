@@ -1,0 +1,54 @@
+<form class="form form-horizontal"
+      name="taskDelegate"
+      role="form">
+
+  <div class="modal-header">
+    <h3 class="modal-title">
+      {{ 'Delegate' | translate }}
+    </h3>
+  </div>
+
+  <div class="modal-body">
+      <!-- Выбор пользователя из списка -->
+      <div class="form-group">
+        <label class="control-label col-md-4"
+               for="delegate-user">Пользователь</label>
+        <div class="col-md-8">
+          <select id="delegate-user"
+                  ng-model="delegate.user"
+                  class="form-control"
+                  type="text">
+            <option value="Demo">Demo Demo</option>
+            <option value="NewUser">New User</option>
+          </select>
+          <div class="help-block">
+            (выберите пользователя для перенаправления задачи)
+          </div>
+        </div>
+      </div>
+
+      <textarea class="form-control"
+             id="comment-form-message"
+             ng-model="comment.message"
+             placeholder="{{ 'COMMENT_MESSAGE_PLACEHOLDER' | translate }}">
+      </textarea>
+  </div>
+
+  <div class="modal-footer">
+    <div class="row row-action">
+      <div class="col-xs-12">
+        <button class="btn btn-xs btn-link"
+                type="button"
+                ng-click="$dismiss()"
+                translate="CLOSE">Close</button>
+
+        <button class="btn btn-primary"
+                type="submit"
+                ng-disabled="!comment.message || !delegate.user"
+                ng-click="submit()"
+                translate="SAVE">Save</button>
+
+      </div>
+    </div>
+  </div>
+</form>

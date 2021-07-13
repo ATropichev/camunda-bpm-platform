@@ -29,8 +29,10 @@ var angular = require('../../../../../camunda-commons-ui/vendor/angular'),
   camTaskDetailDescriptionPlugin = require('./plugins/detail/cam-tasklist-task-detail-description-plugin'),
   /* action plugins */
   camTaskActionCommentPlugin = require('./plugins/action/cam-tasklist-task-action-comment-plugin'),
+  camTaskActionDelegatePlugin = require('./plugins/action/cam-tasklist-task-action-delegate-plugin'),
   /* action plugin controller */
   camCommentCreateModalCtrl = require('./plugins/action/modals/cam-tasklist-comment-form'),
+  camTaskDelegateModalCtrl = require('./plugins/action/modals/cam-tasklist-delegate-form'),
   /* modals */
   camGroupEditModalCtrl = require('./modals/cam-tasklist-groups-modal'),
   /* API */
@@ -69,9 +71,11 @@ taskModule.config(camTaskDetailDescriptionPlugin);
 
 /* action plugins */
 taskModule.config(camTaskActionCommentPlugin);
+taskModule.config(camTaskActionDelegatePlugin);
 
 /* action plugin controller */
 taskModule.controller('camCommentCreateModalCtrl', camCommentCreateModalCtrl);
+taskModule.controller('camTaskDelegateModalCtrl', camTaskDelegateModalCtrl);
 
 taskModule.controller('camGroupEditModalCtrl', camGroupEditModalCtrl);
 
