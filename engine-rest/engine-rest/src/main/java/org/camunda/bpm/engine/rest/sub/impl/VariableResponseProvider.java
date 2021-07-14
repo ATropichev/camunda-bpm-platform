@@ -17,6 +17,7 @@
 package org.camunda.bpm.engine.rest.sub.impl;
 
 import org.camunda.bpm.engine.rest.exception.InvalidRequestException;
+import org.camunda.bpm.engine.rest.util.URLEncodingUtil;
 import org.camunda.bpm.engine.variable.type.ValueType;
 import org.camunda.bpm.engine.variable.value.BytesValue;
 import org.camunda.bpm.engine.variable.value.FileValue;
@@ -41,7 +42,6 @@ public class VariableResponseProvider {
     }
   }
 
-
   /**
    * Creates a response for a variable of type {@link ValueType#FILE}.
    */
@@ -51,7 +51,7 @@ public class VariableResponseProvider {
       type += "; charset=" + fileValue.getEncoding();
     }
     Object value = fileValue.getValue() == null ? "" : fileValue.getValue();
-    return Response.ok(value, type).header("Content-Disposition", "attachment; filename=\"" + fileValue.getFilename() + "\"").build();
+    return Response.ok(value, type).header("Content-Disposition", "attachment; filename*=UTF-8''\"" + URLEncodingUtil.encode(fileValue.getFilename()) + "\"").build();
   }
 
   /**
