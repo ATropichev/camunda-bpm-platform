@@ -25,6 +25,9 @@ import org.camunda.bpm.engine.variable.value.TypedValue;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
@@ -41,6 +44,14 @@ public class VariableResponseProvider {
     }
   }
 
+  // Method to encode a string value using `UTF-8` encoding scheme
+  private static String encodeValue(String value) {
+    try {
+      return URLEncoder.encode(value, StandardCharsets.UTF_8.toString()).replaceAll("\\+", "%20");
+    } catch (UnsupportedEncodingException ex) {
+      throw new RuntimeException(ex.getCause());
+    }
+  }
 
   /**
    * Creates a response for a variable of type {@link ValueType#FILE}.
@@ -51,7 +62,7 @@ public class VariableResponseProvider {
       type += "; charset=" + fileValue.getEncoding();
     }
     Object value = fileValue.getValue() == null ? "" : fileValue.getValue();
-    return Response.ok(value, type).header("Content-Disposition", "attachment; filename=\"" + fileValue.getFilename() + "\"").build();
+    return Response.ok(value, type).header("Content-Disposition", "attachment; filename*=UTF-8''\"" + encodeValue(fileValue.getFilename()) + "\"").build();
   }
 
   /**
